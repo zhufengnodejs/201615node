@@ -22,3 +22,9 @@ console.log(max);
 
 let obj = {name:'zfpx',age:8};
 console.log(Object.keys(obj));
+
+let aArr = [1,2,3];
+let bArr = [4,5,6];
+//let cArr = aArr.concat(bArr);
+let cArr = [...aArr,...bArr];//es6
+console.log(cArr);
