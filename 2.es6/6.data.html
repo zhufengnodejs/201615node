@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn" data-id="200" onclick="click(event)">点我</button>
+<script>
+    var format = function (prefix) {
+        return function (str) {
+            return str.slice(prefix.length)
+        }
+    };
+    document.querySelector('#btn').addEventListener('click',click)
+    function click(event){
+        console.log(event.target.dataset);
+       console.log( event.target.dataset.id);
+    }
+</script>
+</body>
+</html>

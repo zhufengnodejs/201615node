@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul id="content">
+
+</ul>
+<script>
+    var content = document.getElementById("content");
+    var users = [
+        {id: 1, name: "zfpx1"},
+        {id: 1, name: "zfpx2"},
+        {id: 1, name: "zfpx3"}
+    ];
+    /* var str = ``;
+     users.forEach(function (item,index) {
+     str+=`
+     <li>${item.id}:${item.name}</li>
+     `
+     });
+     content.innerHTML = str;*/
+
+    content.innerHTML = users.map(function (item) {
+        return `<li>${item.id}:${item.name}</li>`
+    }).join('');//join用于把数组转化成字符串;
+
+</script>
+</body>
+</html>
