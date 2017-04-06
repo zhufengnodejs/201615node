@@ -3,15 +3,15 @@ let Drag = React.createClass({
     return {left:this.props.left,top:this.props.top}
   },
   handleMouseDown(event){
-    this.x = event.pageX;
-    this.y = event.pageY;
+    this.offsetX = event.pageX - this.state.left;
+    this.offsetY = event.pageY - this.state.top;
     this.mouseDown = true;
   },
   handleMouseMove(event){
     if(this.mouseDown){
       this.setState({
-        left:this.state.left+(event.pageX - this.x),
-        top:this.state.top+(event.pageY - this.y)
+        left:event.pageX-this.offsetX,
+        top:event.pageY - this.offsetY
       });
     }
   },
