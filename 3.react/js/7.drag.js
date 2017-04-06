@@ -3,4 +3,7 @@ let Drag = React.createClass({
 
   }
 });
-ReactDOM.render(<Drag width="100px" height="100px" backgroundColor="green" x={0} y={0} />,document.querySelector('#app'));
+let attrs = {
+  width:100
+}
+ReactDOM.render(<Drag {...attrs} width="100px" height="100px" backgroundColor="green" x={0} y={0} />,document.querySelector('#app'));

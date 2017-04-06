@@ -5,7 +5,7 @@
 let Counter = React.createClass({
   //获得初始的状态对象
   getInitialState(){
-    return {number: 0};
+    return {number: 0,name:'zfpx'};
   },
   handleClick(offset){
     //当修改完状态之后会自动触发重新render
@@ -14,6 +14,7 @@ let Counter = React.createClass({
       number:this.state.number+offset
     });*/
     this.setState({
+      name:'zfpx2',
       number:this.state.number+offset
     })
   },
