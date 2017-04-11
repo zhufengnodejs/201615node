@@ -14,6 +14,21 @@ module.exports = {
         test:/\.js$/,//指定哪种文件后缀的文件用此加载器加载
         //用来把浏览器不认识的es6 es7 react代码转成浏览器能认识的es5代码
         loader:'babel-loader'
+      },
+      {
+        test:/\.css$/,//如果模块是以.css结尾的话
+        //css用来读取css文件，style用来将此模块插入到html中的head中
+        loader:'style-loader!css-loader'
+      },
+      {
+        //所有的资源文件，比如字体、图片、图标等文件要使用url-loader来加载
+        test:/\.(svg|ttf|woff|woff2|eot)$/,
+        loader:'url-loader'
+      },
+      {
+        //所有的资源文件，比如字体、图片、图标等文件要使用url-loader来加载
+        test:/\.(jpg|png|gif)$/,
+        loader:'url-loader'
       }
     ]
   }
