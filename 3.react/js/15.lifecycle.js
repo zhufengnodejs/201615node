@@ -26,7 +26,7 @@ let Counter = React.createClass({
       url: "counter.json",
       dataType: 'json',
       cache: false,
-      async:false,
+      async:true,
       context:this,//指定回调函数中的this对象
       success:  (data) =>{
         console.log(this);
@@ -44,9 +44,10 @@ let Counter = React.createClass({
   render(){
     console.log('4. render 把组件实例挂载到页面中去');
     return (
-      <div>
+      <div style={{border:'1px solid red'}}>
         <p>{this.props.name}:{this.state.number}</p>
         <button onClick={this.handleClick}>+</button>
+        <SubCounter number={this.state.number}/>
       </div>
     )
   },
@@ -68,6 +69,28 @@ let Counter = React.createClass({
   },
   componentDidUpdate(){
     console.log('8.componentDidUpdate 组件更新完成');
+  }
+});
+
+let SubCounter = React.createClass({
+  //组件收到新的属性
+  componentWillReceiveProps(newProps){
+    console.log('9.componentWillReceiveProps 子组件收到新的属性');
+  },
+  shouldComponentUpdate(newProps,newState){
+    if(newProps.number <=5){
+      return true;
+    }else{
+      return false;
+    }
+  },
+  render(){
+    return (
+      <div style={{border:'1px solid blue',margin:'5px'}}>
+        <p>{this.props.number}</p>
+        <button>+</button>
+      </div>
+    )
   }
 });
 
