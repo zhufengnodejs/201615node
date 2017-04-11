@@ -4,10 +4,11 @@
  */
 let Component = React.createClass({
   getInitialState(){
-    return {words:['ab','ac']};
+    return {words:[]};
   },
   handleChange(event){
     let wd = event.target.value;//获取关键字
+    this.wd = wd;
     //https://www.baidu.com/su?cb=jQuery_1493&wd=a&_=1491882359014
     $.ajax({
       url:'http://www.baidu.com/su',
@@ -30,12 +31,12 @@ let Component = React.createClass({
       let index = this.state.index;
       if(code == 38){//上箭头
         index--;
-        if(index<0)
+        if(index == -2)
           index = this.state.words.length-1;
       }else if(code == 40){//下箭头
         index++;
         if(index==this.state.words.length)
-          index = 0;
+          index = -1;
       }
       this.setState({index});
     }
@@ -44,7 +45,7 @@ let Component = React.createClass({
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
-          <input onKeyDown={this.handleKeyDown} onChange={this.handleChange} type="text" className="form-control"/>
+          <input onKeyDown={this.handleKeyDown} onChange={this.handleChange} value={this.state.index == -1?this.wd:this.state.words[this.state.index]} type="text" className="form-control"/>
         </div>
         <div className="panel-body">
           <ul className="list-group">
