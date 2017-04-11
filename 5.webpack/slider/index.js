@@ -21,7 +21,7 @@ class Slider extends React.Component{
       this.setState({
         index
       });
-    },1000)
+    },3000)
   }
    render(){
               return (
