@@ -1,11 +1,16 @@
 //本身用的是 common.js写法
 let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry:'./src/index.js',//入口文件
   output:{//输出配置
     //configuration.output.path: The provided value "" is not an absolute path!
     path:path.resolve('build'),//输出的文件夹路径
-    filename:'bundle.js'//保存的文件名
+    filename:'bundle.[hash].js'//保存的文件名
+  },
+  devServer:{
+    port:8080,//HTTP服务器的端口号
+    contentBase:'./build'//内容的根目录
   },
   //配置模块加载器,当你通过require或import加载一个模块的时候，会找对应加载器进行加载转换
   module:{
@@ -31,5 +36,10 @@ module.exports = {
         loader:'url-loader'
       }
     ]
-  }
+  },
+  plugins:[
+    new HtmlWebpackPlugin({
+      template:'./src/index.html'
+    })
+  ]
 }

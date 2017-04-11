@@ -15,4 +15,5 @@ console.log(obj3);*/
 let img = document.createElement('img');
 img.src = require('./shengdan.jpg');
 img.className = 'img-circle';
+
 document.body.appendChild(img);
