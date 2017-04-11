@@ -10,6 +10,7 @@
   width:200px;
   height:200px;
   position: absolute;
+  transition: 0.5s;
 }
 
 .slider img{

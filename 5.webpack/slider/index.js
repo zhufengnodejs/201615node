@@ -11,12 +11,24 @@ class Slider extends React.Component{
     //这是在es6定义初始化状态的方法，等同于getInitialState()
     this.state = {index:0};
   }
+  componentDidMount(){
+    setInterval(()=>{
+      let index = this.state.index;
+      index++;
+      if(index == this.props.images.length){
+        index = 0;
+      }
+      this.setState({
+        index
+      });
+    },1000)
+  }
    render(){
-     return (
-        <div className="slider-wrapper">
-          {
-            this.props.images.map((image,index)=>{
-              return <div className="slider"><img src={image.src} /></div>
+              return (
+                <div className="slider-wrapper">
+                  {
+                    this.props.images.map((image,index)=>{
+                      return <div style={{zIndex:this.state.index==index?1:0,opacity:this.state.index==index?1:0}} className="slider"><img src={image.src} /></div>
             })
           }
         </div>
