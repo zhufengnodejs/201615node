@@ -4,16 +4,19 @@ import MessageForm from '../components/MessageForm';
 export  default class MessageBox extends React.Component {
   constructor() {
     super();
-    this.state = {
-      messages: []
-    }
+    this.state = {messages: []}//留言列表
   }
-
+  componentWillMount(){//组件将要加载
+    this.props.store.get((messages)=>{
+      this.setState({messages});
+    });
+  }
   addMessage(message){
     let messages = this.state.messages;//先获得老数组
     //赋ID
     message.id = messages.length>0?messages[messages.length-1].id+1:1;
     message.createAt = new Date();
+    //开闭原则 对扩展开放，对修改关闭
     //现在状态对象里的数组其实已经修改了，便是未刷新视图
     messages.push(message);
     //调用setState可以重新调用render方法

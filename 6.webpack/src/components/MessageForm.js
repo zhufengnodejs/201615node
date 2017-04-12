@@ -5,7 +5,7 @@ import React from 'react';
  * 3.状态改变后会自动刷新 MessageList
  */
 // ES5 ES6 重大区别 es5所有事件处理函数 this=当前组件的实例
-// ES6 事件处理函数指向 null
+// ES6 事件处理函数指向 undefined
 export default  class MessageForm extends React.Component{
   constructor(){
     super();
@@ -21,17 +21,18 @@ export default  class MessageForm extends React.Component{
   // 我们后生的 函数里this = undefined
   render(){//render里面的this指向当前组件
     return (
-      <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
+      <form className="form-horizontal"  onSubmit={this.handleSubmit.bind(this)} >
         <div className="form-group">
           <label htmlFor="name" className="control-label col-md-1">姓名</label>
           <div className="col-md-11">
-            <input ref={ref=>{this.name=ref}} required="required" id="name" type="text" className="form-control"/>
+           {/* 当此虚拟DOM元素渲染到页面中后会有一个真实DOM，然后会调用此方法，把真实DOM元素传进来*/}
+            <input ref={element=>{this.name=element}} required="required" id="name" type="text" className="form-control"/>
           </div>
         </div>
         <div className="form-group">
           <label htmlFor="content" className="control-label col-md-1">内容</label>
           <div className="col-md-11">
-            <textarea  cols="30" rows="10" className="form-control" id="content" required="required" ref={ref=>this.content=ref}></textarea>
+            <textarea  cols="30" rows="10" className="form-control" id="content" required="required" ref={element=>this.content=element}></textarea>
           </div>
         </div>
         <div className="form-group">
