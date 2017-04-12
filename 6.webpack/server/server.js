@@ -5,6 +5,8 @@ let app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(function(req,res,next){
   res.setHeader('Access-Control-Allow-Origin','http://localhost:8080');
+  // Method DELETE is not allowed by Access-Control-Allow-Methods in preflight response.
+  res.setHeader('Access-Control-Allow-Methods',"GET,POST,DELETE,OPTIONS");
   next();
 });
 /**
@@ -21,6 +23,15 @@ app.get('/messages', function (req, res) {
 app.post('/messages',function (req,res) {
   let message = req.body;
   Message.create(message,function (err,message) {
+    Message.find({}, function (err, messages) {
+      res.send(messages);
+    });
+  });
+});
+
+app.delete('/messages',function (req,res) {
+  let query = req.body;
+  Message.remove(query,function (err,message) {
     Message.find({}, function (err, messages) {
       res.send(messages);
     });
