@@ -16,7 +16,9 @@ app.use(function(req,res,next){
  */
 app.get('/messages', function (req, res) {
   Message.find({}, function (err, messages) {
-    res.send(messages);
+    //res.send(messages);
+    let callback = req.query.cb;
+    res.send(`${callback}(${JSON.stringify(messages)})`);
   });
 });
 //客户端增加一条留言,返回最新所有留言
