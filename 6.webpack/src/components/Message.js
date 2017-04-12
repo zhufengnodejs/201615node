@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';// npm install moment
 export default class Message extends React.Component {
   render() {
     let {message} = this.props;
@@ -7,7 +8,7 @@ export default class Message extends React.Component {
         {message.name}:
         {message.content}
         <button className="btn btn-danger btn-xs" onClick={()=>this.props.delMessage(message.id)}>删除</button>
-        <span className="pull-right">{message.createAt.toLocaleString()}</span>
+        <span className="pull-right">{moment(message.createAt).fromNow()}</span>
       </li>
     )
   }
