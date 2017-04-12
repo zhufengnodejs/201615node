@@ -3,6 +3,10 @@ let Message = require('./model').Message;
 let bodyParser = require('body-parser');
 let app = express();
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(function(req,res,next){
+  res.setHeader('Access-Control-Allow-Origin','http://localhost:8080');
+  next();
+});
 /**
  * GET /messages 返回所有的留言
  * POST /messages 添加新的留言
