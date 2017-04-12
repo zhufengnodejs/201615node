@@ -5,11 +5,19 @@ export  default class MessageBox extends React.Component {
   constructor() {
     super();
     this.state = {
-      messages: [
-        {name: '张三', content: '李四你好', createAt: new Date()},
-        {name: '李四', content: '张三你好', createAt: new Date()}
-      ]
+      messages: []
     }
+  }
+
+  addMessage(message){
+    let messages = this.state.messages;//先获得老数组
+    //赋ID
+    message.id = messages.length>0?messages[messages.length-1].id+1:1;
+    message.createAt = new Date();
+    //现在状态对象里的数组其实已经修改了，便是未刷新视图
+    messages.push(message);
+    //调用setState可以重新调用render方法
+    this.setState({messages});
   }
 
   render() {
@@ -22,7 +30,7 @@ export  default class MessageBox extends React.Component {
           <MessageList messages={this.state.messages}/>
         </div>
         <div className="panel-footer">
-          <MessageForm/>
+          <MessageForm addMessage={this.addMessage.bind(this)}/>
         </div>
       </div>
     )

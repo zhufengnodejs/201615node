@@ -14,8 +14,8 @@ export default  class MessageForm extends React.Component{
     event.preventDefault();//阻止表单默认提交
     let name = this.name.value;;
     let content = this.content.value;
-
-
+    this.props.addMessage({name,content});
+    this.content.value = '';
   }
   // react亲生 render方法里this都指向当前组件的实例
   // 我们后生的 函数里this = undefined
