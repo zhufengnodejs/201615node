@@ -19,7 +19,11 @@ export  default class MessageBox extends React.Component {
     //调用setState可以重新调用render方法
     this.setState({messages});
   }
-
+  delMessage(id){
+    let messages = this.state.messages;
+    messages = messages.filter((message)=>message.id != id);
+    this.setState({messages});
+  }
   render() {
     return (
       <div className="panel panel-default">
@@ -27,7 +31,7 @@ export  default class MessageBox extends React.Component {
           <h3 className="text-center">欢迎留言</h3>
         </div>
         <div className="panel-body">
-          <MessageList messages={this.state.messages}/>
+          <MessageList delMessage={this.delMessage.bind(this)} messages={this.state.messages}/>
         </div>
         <div className="panel-footer">
           <MessageForm addMessage={this.addMessage.bind(this)}/>

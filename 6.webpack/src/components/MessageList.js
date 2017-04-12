@@ -6,7 +6,7 @@ export default class MessageList extends React.Component{
       <ul className="list-group">
         {
           this.props.messages.map((message,index)=>(
-            <Message key={index} message={message}/>
+            <Message delMessage={this.props.delMessage} key={index} message={message}/>
           ))
         }
       </ul>
