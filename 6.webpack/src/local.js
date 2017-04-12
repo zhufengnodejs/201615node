@@ -22,8 +22,14 @@ module.exports = {
     });
   },
   //删除一条留言
-  del(id){
-
+  del(id,callback){
+    //先获取老数组
+    this.get((messages)=>{
+      //对老数组进行过滤，删除掉要删除的元素
+      messages = messages.filter((message)=>message.id != id);
+      localStorage.setItem(MESSAGES,JSON.stringify(messages));
+      callback(messages);
+    });
   }
 
 }

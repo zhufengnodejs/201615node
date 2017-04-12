@@ -17,9 +17,7 @@ export  default class MessageBox extends React.Component {
     });
   }
   delMessage(id){
-    let messages = this.state.messages;
-    messages = messages.filter((message)=>message.id != id);
-    this.setState({messages});
+    this.props.store.del(id,(messages)=>this.setState({messages}));
   }
   render() {
     return (
