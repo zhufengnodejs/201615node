@@ -10,8 +10,16 @@ module.exports = {
     callback(messages);
   },
   //增加一条新的留言
-  add(message){
-
+  add(message,callback){
+    //先调用自己的get方法获取到老数组
+    this.get((messages)=>{
+      //添加ID属性，就是最大的ID+1
+      message.id = messages.length>0?messages[messages.length-1].id+1:1;
+      message.createAt = new Date();//增加创建时间属性
+      messages.push(message);//把新的消息添加到数组中
+      localStorage.setItem(MESSAGES,JSON.stringify(messages));//把新数保存到localStorage
+      callback(messages);
+    });
   },
   //删除一条留言
   del(id){
