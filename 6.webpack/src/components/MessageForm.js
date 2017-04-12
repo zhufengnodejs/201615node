@@ -1,4 +1,9 @@
 import React from 'react';
+/**
+ * 1.为按钮绑定点击事件
+ * 2.把收集到的姓名和内容封装成一个对象，传递给MessageBox，从而修改状态。
+ * 3.状态改变后会自动刷新 MessageList
+ */
 export default  class MessageForm extends React.Component{
   render(){
     return (
