@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="text-center">珠峰聊天室</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <li class="list-group-item"></li>
+            </ul>
+          </div>
+          <div class="panel-footer">
+            <form>
+              <div class="form-group">
+                <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary ">发言</button>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+//当你在页面中引用了socket.io.js文件之后，会在全局下面增加一个 io的变量
+/*io('http://localhost:8080/');
+io('/'); 代表相对路径，就代表 http://localhost:8080/*/
+let socket = io();//不写目标地址就是当前路径/
+//监听连接成功事件  open
+socket.on('connect',function(){
+  console.log('连接成功');
+  socket.send('你好');
+});
+//监听服务器发过来的消息
+socket.on('message',function(msg){
+    console.log(msg);
+});
+</script>
+</body>
+</html>
