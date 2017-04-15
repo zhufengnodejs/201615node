@@ -21,7 +21,7 @@
           <div class="panel-footer">
             <form onsubmit="send(event)">
               <div class="form-group">
-                <textarea name="content" id="content" cols="30" rows="10" required="required" class="form-control"></textarea>
+                <textarea name="content" id="content" cols="30" rows="10" required="required" class="form-control" onkeydown="autoSend(event)"></textarea>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary ">发言</button>
@@ -48,16 +48,42 @@ let ulMessages = document.querySelector('#messages');
 socket.on('message',function(msg){
   let li = document.createElement('li');
   li.className = 'list-group-item';
+  li.style = "word-break: break-word";
   li.innerHTML = msg;
   ulMessages.appendChild(li);
 });
+let areaContent = document.querySelector('#content');
 //发言
 function send(event){
   event.preventDefault();
-  let areaContent = document.querySelector('#content');
   let content  = areaContent.value;
   socket.send(content);
   areaContent.value = '';
+}
+let ctrlDown = false;
+let ctrlTimer;
+//回车自动发动消息或者回车
+function autoSend(event){
+  let code = event.keyCode;//先得到按键的编码
+  if(code == 17){// control键 = 17
+    if(ctrlTimer){//如果计数器有值
+        clearTimeout(ctrlTimer);//清掉以前老的计数器
+        ctrlTimer = null;// 置为null
+    }
+    ctrlDown = true;//设置ctrl按钮状态为true
+    ctrlTimer = setTimeout(function(){
+      ctrlDown = false;//一秒后让ctrlDown状态变回false
+      ctrlTimer = null;// 置为null
+    },1000);
+  }
+  if(code == 13){
+      if(ctrlDown){//ctrl按下状态为true
+        areaContent.value = areaContent.value + '\n';
+      }else{//false
+        send(event);
+      }
+  }
+
 }
 </script>
 </body>
