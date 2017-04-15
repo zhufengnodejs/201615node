@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="clock"></div>
+<script>
+  let clock = document.querySelector('#clock');
+  function RequestLoop() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET','/clock',true);
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState == 4 && /2\d{2}/.test(xhr.status)){
+        clock.innerHTML = xhr.responseText;
+        RequestLoop();
+      }
+    };
+    xhr.send();
+  }
+
+  RequestLoop()
+</script>
+</body>
+</html>
