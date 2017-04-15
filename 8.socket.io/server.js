@@ -56,6 +56,22 @@ io.on('connection',function(socket){
       socket.emit('deleted',_id);
     })
    });
+  socket.on('revoke',function(_id){
+    Message.findById(_id,function(err,message){
+      if(Date.now() - message.createAt.getTime()<2*60*1000){
+        Message.remove({_id},function(){
+          io.emit('revoked',_id);
+        })
+      }else{
+          socket.send({
+            author:'系统',
+            content:'已经超过2分钟，无法撤销!',
+            createAt:new Date().toLocaleString()
+          });
+      }
+    })
+
+  });
 });
 server.listen(8080);
 
