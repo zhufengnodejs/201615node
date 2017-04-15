@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
   <style>
     .user{
@@ -45,18 +47,27 @@
 io('/'); 代表相对路径，就代表 http://localhost:8080/*/
 let socket = io();//不写目标地址就是当前路径/
 //监听连接成功事件  open
-/*socket.on('connect',function(){
-  console.log('连接成功');
-  socket.send('你好');
-});*/
+socket.on('connect',function(){
+  //向服务器发送一个消息 要求获取所有记录
+  socket.emit('getAllMessages');
+});
 let ulMessages = document.querySelector('#messages');
+function format(msgObj){
+    return `<span class="user">${msgObj.author}</span>:${msgObj.content} <span class="pull-right">${msgObj.createAt}</span>`;
+}
 //监听服务器发过来的消息
 socket.on('message',function(msgObj){
   let li = document.createElement('li');
   li.className = 'list-group-item';
   li.style = "word-break: break-word";
-  li.innerHTML = `<span class="user">${msgObj.author}</span>:${msgObj.content} <span class="pull-right">${msgObj.createAt}</span>`;
+  li.innerHTML = format(msgObj);
   ulMessages.appendChild(li);
+});
+socket.on('allMessages',function (messages) {
+  let html = messages.map(function(message,index){
+    return `<li class="list-group-item">${format(message)}</li>`;
+  }).join('');
+  ulMessages.innerHTML = html;
 });
 let areaContent = document.querySelector('#content');
 //发言

@@ -1,6 +1,7 @@
 // http服务器一般会和websocket配合使用
 let express = require('express');
 let path = require('path');
+let Message = require('./model').Message;
 //得到app,app其实是一个请求监听函数
 let app = express();
 app.use(express.static(__dirname));
@@ -29,9 +30,10 @@ io.on('connection',function(socket){
           sockets[toUserName].send({author:username,content,createAt:new Date().toLocaleString()});
         }else{//否则就是公聊
               //把此消息发送给所有的客户端
-          io.emit('message',{author:username,content:msg,createAt:new Date().toLocaleString()});
+          Message.create({author:username,content:msg},function(err,message){
+            io.emit('message',message);
+          });
         }
-
       }else{
         //如果是第一次发言，那么会把此次的消息当成用户名
         username = msg;
@@ -40,6 +42,13 @@ io.on('connection',function(socket){
         io.emit('message',{author:'系统',content:`欢迎${username}光临聊天室`,createAt:new Date().toLocaleString()});
       }
 
+   });
+   socket.on('getAllMessages',function(){
+     Message.find().sort({createAt:-1}).limit(20).exec(function(err,messages){
+       // 30 29 ...  11 -> 11 ... 30
+        messages.reverse();
+        socket.emit('allMessages',messages);
+     })
    });
 });
 server.listen(8080);
