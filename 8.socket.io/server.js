@@ -14,10 +14,17 @@ let io = require('socket.io')(server);
 
 //监听客户端的连接 当有连接到来的时候执行回调函数
 io.on('connection',function(socket){
+   socket.send({author:'系统',content:'请输入呢称',createAt:new Date()});
+   let username;
    socket.on('message',function (msg) {
-      //socket.send(msg);//socket.emit('message',msg)
-      //把此消息发送给所有的客户端
-      io.emit('message',msg);
+      if(username){//不是第一次，
+        //把此消息发送给所有的客户端
+        io.emit('message',{author:username,content:msg,createAt:new Date()});
+      }else{
+        //如果是第一次发言，那么会把此次的消息当成用户名
+        username = msg;
+        io.emit('message',{author:'系统',content:`欢迎${username}光临聊天室`,createAt:new Date()});
+      }
    });
 });
 server.listen(8080);
@@ -32,6 +39,10 @@ server.listen(8080);
  *    3.服务器进行全局广播，通知所有连接到它的客户端
  *    4.所有客户端收到广播后，会把此条消息添加到ul列表里
  * 2. 实现具名聊天
+ *    1.当客户端初次连接的时候，先提示他输入呢称
+ *    2. 当客户端第一次输入信息过来，会把此次的信息当成呢称。
+ *    3. 以后客户端再发信息过来，就会显示是此呢称发的信息
+ *
  * 3. 实现私聊
  * 4. 聊天持久化
  * 5. 分房间聊天

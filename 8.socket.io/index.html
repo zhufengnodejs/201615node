@@ -45,11 +45,11 @@ let socket = io();//不写目标地址就是当前路径/
 });*/
 let ulMessages = document.querySelector('#messages');
 //监听服务器发过来的消息
-socket.on('message',function(msg){
+socket.on('message',function(msgObj){
   let li = document.createElement('li');
   li.className = 'list-group-item';
   li.style = "word-break: break-word";
-  li.innerHTML = msg;
+  li.innerHTML = `${msgObj.author}:${msgObj.content} <span class="pull-right">${msgObj.createAt.toLocaleString()}</span>`;
   ulMessages.appendChild(li);
 });
 let areaContent = document.querySelector('#content');
