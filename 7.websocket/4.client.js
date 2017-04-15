@@ -7,6 +7,7 @@ socket.on('open',function(){
   socket.send('你好');
 });
 //客户端监听服务器端发过来的消息
-socket.on('message',function(msg){
+socket.on('message',function(msg,flag){
   console.log(msg);
+  console.log(arguments);
 });
