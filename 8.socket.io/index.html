@@ -22,7 +22,7 @@
             <h3 class="text-center">珠峰聊天室</h3>
           </div>
           <div class="panel-body">
-            <ul class="list-group" id="messages" onclick="selectUser(event)">
+            <ul class="list-group" id="messages" onclick="handleClick(event)">
 
             </ul>
           </div>
@@ -53,7 +53,7 @@ socket.on('connect',function(){
 });
 let ulMessages = document.querySelector('#messages');
 function format(msgObj){
-    return `<span class="user">${msgObj.author}</span>:${msgObj.content} <span class="pull-right">${msgObj.createAt}</span>`;
+    return `<span class="user">${msgObj.author}</span>:${msgObj.content} <button data-cmd="delete" data-id="${msgObj._id}" class="btn btn-warning">删除</button> <span class="pull-right">${msgObj.createAt}</span>`;
 }
 //监听服务器发过来的消息
 socket.on('message',function(msgObj){
@@ -65,9 +65,14 @@ socket.on('message',function(msgObj){
 });
 socket.on('allMessages',function (messages) {
   let html = messages.map(function(message,index){
-    return `<li class="list-group-item">${format(message)}</li>`;
+    return `<li id="message_${message._id}" class="list-group-item">${format(message)}</li>`;
   }).join('');
   ulMessages.innerHTML = html;
+});
+
+socket.on('deleted',function(id){
+  let li = document.querySelector(`#message_${id}`);
+  li.parentNode.removeChild(li);
 });
 let areaContent = document.querySelector('#content');
 //发言
@@ -102,11 +107,17 @@ function autoSend(event){
   }
 
 }
-//选中某个用户
-function selectUser(event){
-    // hasClass {a user}
-   if(/(^| )user($| )/.test(event.target.className)){
-     areaContent.value = `@${event.target.innerHTML} `;
+
+function handleClick(event){
+    let element = event.target;
+  console.log(element.dataset);
+    // hasClass {a user}//选中某个用户
+   if(/(^| )user($| )/.test(element.className)){
+     areaContent.value = `@${element.innerHTML} `;
+     //html5自定义属性 data-cmd="delete" data-id='1' data-name='zfpx'  dataset={id:1,name:'zfpx'}
+   }else if(element.dataset.cmd == 'delete'){
+      let id = element.dataset.id;
+      socket.emit('delete',id);
    }
 }
 </script>

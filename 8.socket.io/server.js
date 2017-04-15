@@ -15,7 +15,7 @@ let io = require('socket.io')(server);
 let sockets = {};
 //监听客户端的连接 当有连接到来的时候执行回调函数
 io.on('connection',function(socket){
-   socket.send({author:'系统',content:'请输入呢称',createAt:new Date().toLocaleString()});
+
    let username;
    socket.on('message',function (msg) {
       if(username){//不是第一次，
@@ -48,7 +48,13 @@ io.on('connection',function(socket){
        // 30 29 ...  11 -> 11 ... 30
         messages.reverse();
         socket.emit('allMessages',messages);
+       socket.send({author:'系统',content:'请输入呢称',createAt:new Date().toLocaleString()});
      })
+   });
+   socket.on('delete',function(_id){
+    Message.remove({_id},function(){
+      socket.emit('deleted',_id);
+    })
    });
 });
 server.listen(8080);
