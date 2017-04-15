@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
   <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+  <style>
+    .user{
+      color:blue;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
@@ -14,7 +20,7 @@
             <h3 class="text-center">珠峰聊天室</h3>
           </div>
           <div class="panel-body">
-            <ul class="list-group" id="messages">
+            <ul class="list-group" id="messages" onclick="selectUser(event)">
 
             </ul>
           </div>
@@ -49,7 +55,7 @@ socket.on('message',function(msgObj){
   let li = document.createElement('li');
   li.className = 'list-group-item';
   li.style = "word-break: break-word";
-  li.innerHTML = `${msgObj.author}:${msgObj.content} <span class="pull-right">${msgObj.createAt.toLocaleString()}</span>`;
+  li.innerHTML = `<span class="user">${msgObj.author}</span>:${msgObj.content} <span class="pull-right">${msgObj.createAt}</span>`;
   ulMessages.appendChild(li);
 });
 let areaContent = document.querySelector('#content');
@@ -84,6 +90,13 @@ function autoSend(event){
       }
   }
 
+}
+//选中某个用户
+function selectUser(event){
+    // hasClass {a user}
+   if(/(^| )user($| )/.test(event.target.className)){
+     areaContent.value = `@${event.target.innerHTML} `;
+   }
 }
 </script>
 </body>
