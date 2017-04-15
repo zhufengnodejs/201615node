@@ -16,7 +16,10 @@ let io = require('socket.io')(server);
 io.on('connection',function(socket){
    socket.on('message',function (msg) {
      console.log(msg);
+     //向单个客户端发消息
      socket.send('服务器说:'+msg);
+     //如何广播?向所有的客户端发消息
+     io.emit('message','服务器说:'+msg);
    });
 });
 server.listen(8080);
@@ -24,4 +27,14 @@ server.listen(8080);
 // http://localhost:8080
 // ws://localhost:8080
 
-
+/**
+ * 1. 实现匿名聊天
+ *    1.给按钮绑定点击事件，或给表单绑定提交事件。
+ *    2.当事件触发的时候，得到输入的内容并且发给服务器
+ *    3.服务器进行全局广播，通知所有连接到它的客户端
+ *    4.所有客户端收到广播后，会把此条消息添加到ul列表里
+ * 2. 实现具名聊天
+ * 3. 实现私聊
+ * 4. 聊天持久化
+ * 5. 分房间聊天
+ */
