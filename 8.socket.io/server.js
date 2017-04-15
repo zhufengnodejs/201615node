@@ -15,11 +15,9 @@ let io = require('socket.io')(server);
 //监听客户端的连接 当有连接到来的时候执行回调函数
 io.on('connection',function(socket){
    socket.on('message',function (msg) {
-     console.log(msg);
-     //向单个客户端发消息
-     socket.send('服务器说:'+msg);
-     //如何广播?向所有的客户端发消息
-     io.emit('message','服务器说:'+msg);
+      //socket.send(msg);//socket.emit('message',msg)
+      //把此消息发送给所有的客户端
+      io.emit('message',msg);
    });
 });
 server.listen(8080);

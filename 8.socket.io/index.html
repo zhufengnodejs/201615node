@@ -14,17 +14,17 @@
             <h3 class="text-center">珠峰聊天室</h3>
           </div>
           <div class="panel-body">
-            <ul class="list-group">
-              <li class="list-group-item"></li>
+            <ul class="list-group" id="messages">
+
             </ul>
           </div>
           <div class="panel-footer">
-            <form>
+            <form onsubmit="send(event)">
               <div class="form-group">
-                <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="content" id="content" cols="30" rows="10" required="required" class="form-control"></textarea>
               </div>
               <div class="form-group">
-                <button class="btn btn-primary ">发言</button>
+                <button type="submit" class="btn btn-primary ">发言</button>
               </div>
             </form>
           </div>
@@ -39,14 +39,26 @@
 io('/'); 代表相对路径，就代表 http://localhost:8080/*/
 let socket = io();//不写目标地址就是当前路径/
 //监听连接成功事件  open
-socket.on('connect',function(){
+/*socket.on('connect',function(){
   console.log('连接成功');
   socket.send('你好');
-});
+});*/
+let ulMessages = document.querySelector('#messages');
 //监听服务器发过来的消息
 socket.on('message',function(msg){
-    console.log(msg);
+  let li = document.createElement('li');
+  li.className = 'list-group-item';
+  li.innerHTML = msg;
+  ulMessages.appendChild(li);
 });
+//发言
+function send(event){
+  event.preventDefault();
+  let areaContent = document.querySelector('#content');
+  let content  = areaContent.value;
+  socket.send(content);
+  areaContent.value = '';
+}
 </script>
 </body>
 </html>
