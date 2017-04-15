@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="clock"></div>
+<script>
+  let clock = document.querySelector('#clock');
+ setInterval(function(){
+     let xhr = new XMLHttpRequest();
+     xhr.open('GET','/clock',true);
+     xhr.onreadystatechange = function(){
+       clock.innerHTML = xhr.responseText;
+     }
+     xhr.send();
+ },1000)
+</script>
+</body>
+</html>
