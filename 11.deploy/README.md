@@ -32,7 +32,13 @@ npm install n -g
 n 7.5
 ```
 ## 安装git
+```
+apt-get install git
+```
 ## 安装mongodb
+```
+apt-get install mongodb
+```
 ## 安装pm2
 ## 安装nginx
 
