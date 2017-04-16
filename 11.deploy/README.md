@@ -35,11 +35,34 @@ n 7.5
 ```
 apt-get install git
 ```
+## 上传项目代码
+```
+git init 
+git add -A
+git commit -m"init"
+git remote add origin https://github.com/zhufengnodejs/201615crawl.git
+git push -u origin master
+
+```
+## 服务器下载代码
+```
+git clone https://github.com/zhufengnodejs/201615crawl.git
+cd 201615crawl
+npm install --registry=https://registry.npm.taobao.org
+ export DEBUG=crawl:*
+cd ..
+
+```
 ## 安装mongodb
 ```
 apt-get install mongodb
 ```
 ## 安装pm2
+```
+npm install pm2 -g
+
+pm2 start server.js
+```
 ## 安装nginx
 
 
