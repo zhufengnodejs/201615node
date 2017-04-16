@@ -5,23 +5,26 @@
  *  为了避免回调嵌套的恶魔金字塔。 async
  */
 let async = require('async');
-async.series([
-  function(next){
+function series(tasks,cb){
+
+}
+series([
+  function(callback){
     setTimeout(function(){
       console.log('买菜');
-      next(null,'菜');
+      callback(null,'菜');
     },3000)
   },
-  function(next){
+  function(callback){
     setTimeout(function(){
       console.log('做饭');
-      next('没天然气了','');
+      callback('没天然气了','');
     },2000)
   },
-  function(next){
+  function(callback){
     setTimeout(function(){
       console.log('吃饭');
-      next(null,'物');
+      callback(null,'物');
     },3000);
   }
 ],function (err,result) {

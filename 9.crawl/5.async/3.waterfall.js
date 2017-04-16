@@ -4,24 +4,16 @@
  */
 let async = require('async');
 let fs = require('fs');
+let readA = function (callback) {
+  fs.readFile('a.txt', 'utf8', callback)
+}
+
+let read = function (data, callback) {//c.txt
+  fs.readFile(data, 'utf8', callback)
+}
 async.waterfall([
- function(callback){
-    fs.readFile('a.txt','utf8',function(err,data){
-        callback(err,data);//b.txt
-    })
- },
-  function(data,callback){//b.txt
-    console.log('@'+data+'@');
-    fs.readFile(data,'utf8',function(err,data){
-      callback(err,data);//c.txt
-    })
-  },
-  function(data,callback){//c.txt
-    fs.readFile(data,'utf8',function(err,data){
-      callback(err,data);//3
-    })
-  }
-],function(err,result){
+  readA,read,read
+], function (err, result) {
   console.log(err);
   console.log(result);
 });
