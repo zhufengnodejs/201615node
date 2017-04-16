@@ -15,10 +15,10 @@ module.exports = function (url,callback) {
     let $ = cheerio.load(body);
     let movies = [];//电影数组
     $('.keyword a.list-title').each(function(index,item){
-      let $this = $(this);
+      let $this = $(this);//把原生对象转成JQUERY对象
       let movie = {
-        name:$this.text(),
-        url:$this.attr('href')
+        name:$this.text(),//名称
+        url:$this.attr('href')//超链接
       }
       movies.push(movie);
     })
@@ -28,7 +28,7 @@ module.exports = function (url,callback) {
 
 //测试驱动开发 TDD Test Driven Development
 // 先写测试用例，再根据测试用例填写内容
-let url = 'http://top.baidu.com/buzz?b=26';
+/*let url = 'http://top.baidu.com/buzz?b=26';
 module.exports(url,function(err,movies){
   console.log(movies);
-});
+});*/
