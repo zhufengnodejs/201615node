@@ -7,6 +7,7 @@
 let request = require('request');
 let iconv = require('iconv-lite');
 let cheerio = require('cheerio');
+let debug = require('debug')('crawl:read');
 module.exports = function (url,callback) {
   //请求URL地址得到响应体
   request({url,encoding:null},function (err,response,body) {
@@ -20,6 +21,7 @@ module.exports = function (url,callback) {
         name:$this.text(),//名称
         url:$this.attr('href')//超链接
       }
+      debug(`读到电影:${movie.name}`);
       movies.push(movie);
     })
     callback(err,movies);
