@@ -6,6 +6,7 @@ let rename = require('gulp-rename');
 let uglify = require('gulp-uglify');
 let babel = require('gulp-babel');
 let connect = require('gulp-connect');
+let webpack = require('gulp-webpack');
 //let minifyCss = require('gulp-minify-css');
 gulp.task('css',function () {
   gulp.src('src/less/**/*.less')
